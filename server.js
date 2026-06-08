@@ -10,11 +10,12 @@ app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 /* ------------------------------------------------------------------ */
 /*  Virtual reel strips – weighted symbol distribution                 */
-/*  'seven' appears least (rare), 'cherry' appears most (common)      */
+/*  Each reel has its own jackpot letter assigned: K-B-C-G-A-M-E      */
 /* ------------------------------------------------------------------ */
-const SYMBOLS = ['cherry','cherry','cherry','cherry','lemon','lemon','orange','seven','star','grape','watermelon','diamond','K','B','C','G','A','M','E'];
+const COMMON_SYMBOLS = ['cherry','cherry','cherry','cherry','lemon','lemon','orange','seven','star','grape','watermelon','diamond'];
+const JACKPOT_LETTERS = ['K','B','C','G','A','M','E'];
 
-const reels = Array.from({ length: 7 }, () => [...SYMBOLS]);
+const reels = JACKPOT_LETTERS.map(letter => [...COMMON_SYMBOLS, letter]);
 
 const MULTIPLIERS = {
   seven:      10,
@@ -123,7 +124,7 @@ const miniGame = {
 /* ------------------------------------------------------------------ */
 const jackpot = {
   enabled: true,
-  forceJackpot: true,
+  forceJackpot: false,
   pattern: ['K','B','C','G','A','M','E'],
   row: 1,
   potAmount: '$200000',
